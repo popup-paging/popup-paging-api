@@ -7,7 +7,7 @@
 		/* SELECT SIDO "sido"
 		  FROM COMUSER.TBD_COM_INF_ZIPCOD 
 	     GROUP BY SIDO */
-	   SELECT 1 "sido" FROM DUAL
+	   SELECT * FROM mytable
 	</select>
 
 </mapper>
