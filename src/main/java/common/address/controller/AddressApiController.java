@@ -38,7 +38,7 @@ public class AddressApiController {
 		try {
 			List<Map<String, Object>> map = addressApiService.getCityList(param);
 		    Gson gson = new Gson();
-		    result = gson.toJson(map, List.class);
+		    //result = gson.toJson(map, List.class);
 
 		}catch(Exception e) {
 			log.error("getCityList: {}" + e.getMessage());
