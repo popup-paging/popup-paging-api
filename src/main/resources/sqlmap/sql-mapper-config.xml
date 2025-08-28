@@ -4,5 +4,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="addressVO" type="common.address.service.model.AddressApiVO"/>
+		<typeAlias alias="authVO" type="common.auth.service.model.AuthApiVO"/>
 	</typeAliases>
 </configuration>

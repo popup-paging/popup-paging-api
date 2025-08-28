@@ -14,35 +14,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//import common.address.service.AddressApiService;
+import jakarta.annotation.Resource;
+
+import common.auth.service.AuthApiService;
 
 
 @RestController
 @RequestMapping("/common/auth")
 public class AuthApiController {
 
+	@Resource(name = "AuthApiService")
+	private AuthApiService authApiService;
+	
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody Map<String, String> loginRequest) {
-        String username = loginRequest.get("username");
-        String password = loginRequest.get("password");
+    	
+    	// DB 조회 (아이디+비밀번호 일치 확인)
+        boolean isAuthenticated = authApiService.getAccount(loginRequest);
         
-        if ("user".equals(username) && "1234".equals(password)) {
+        if (isAuthenticated) {
+        	
+        	String username = loginRequest.get("username");
+            String password = loginRequest.get("password");
+        	
             String sessionId = UUID.randomUUID().toString();
-
             redisTemplate.opsForValue().set(sessionId, username, 30, TimeUnit.MINUTES);
 
             ResponseCookie sessionCookie = ResponseCookie.from("sessionId", sessionId)
                     .httpOnly(true)
                     .path("/")
                     .maxAge(Duration.ofMinutes(30))
-                    .sameSite("Strict") // CSRF 방어
+                    .sameSite("Strict")
                     .build();
 
             return ResponseEntity.ok()
