@@ -13,7 +13,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8080") // ← web 서버 주소
+		                .allowedOrigins(
+	                        "http://localhost:8080",           // 로컬 개발용
+	                        "http://43.201.181.113:8080"       // ec2 서버용
+	                    )
                         .allowedMethods("*")
                         .allowCredentials(true); // ← 쿠키 허용
             }
