@@ -15,7 +15,7 @@ public class CorsConfig {
                 registry.addMapping("/**")
 		                .allowedOrigins(
 	                        "http://localhost:8080",           // 로컬 개발용
-	                        "http://43.201.167.95:8080"       // ec2 서버용
+	                        "http://52.78.23.52:8080"       // ec2 서버용
 	                    )
                         .allowedMethods("*")
                         .allowCredentials(true); // ← 쿠키 허용
